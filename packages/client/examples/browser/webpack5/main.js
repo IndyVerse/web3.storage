@@ -7,13 +7,20 @@ const output = document.querySelector('#output')
 
 showMessage('> ⁂ waiting for form submission...')
 
+showMessage('> 📦 creating web3.storage client')
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDg1ODBBQTYyMDczZUJERjI4RTY3ODQxRDg5YzM4M0NkRWFmNWIwY0UiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NDIxNzE0MTA0ODMsIm5hbWUiOiJJbmR5VmVyc2UvV2ViMy5zdG9yYWdlIGxvY2FsIn0.lcaTOY5hgrps_sf-RJjO8spN30TICHw5mZ4m2810Xyk'
+const client = new Web3Storage({ token })
+showMessage('> 📦 access web3.storage client as window.web3')
+window.web3 = client
+parent.wweb3p = client
+console.log(window.web3)
 form.addEventListener('submit', async function (event) {
   // don't reload the page!
   event.preventDefault()
 
   showMessage('> 📦 creating web3.storage client')
   const token = tokenInput.value
-  const client = new Web3Storage({ token })
+  const client = window.web3
 
   showMessage('> 🤖 chunking and hashing the files (in your browser!) to calculate the Content ID')
   const files = filepicker.files
@@ -36,13 +43,13 @@ form.addEventListener('submit', async function (event) {
   showMessage(`> ⁂ ${totalBytes.toLocaleString()} bytes stored!`)
 }, false)
 
-function showMessage (text) {
+function showMessage(text) {
   const node = document.createElement('div')
   node.innerText = text
   output.appendChild(node)
 }
 
-function showLink (url) {
+function showLink(url) {
   const node = document.createElement('a')
   node.href = url
   node.innerText = `> 🔗 ${url}`
