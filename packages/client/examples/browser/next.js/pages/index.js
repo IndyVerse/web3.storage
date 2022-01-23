@@ -1,6 +1,11 @@
 import React, { useState, useReducer } from 'react'
 import { Web3Storage } from 'web3.storage'
 
+const process = {
+  browser: true,
+  env: {
+  }
+};
 export default function Home () {
   const [messages, showMessage] = useReducer((msgs, m) => msgs.concat(m), [])
   const [token, setToken] = useState('')
